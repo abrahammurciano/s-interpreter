@@ -9,4 +9,6 @@ class Branch(Instruction):
 
 	def run(self, state: State):
 		if state.vars.is_zero(self.__var):
+			state.inc_pc()
+		else:
 			state.go_to(self.__label)

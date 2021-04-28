@@ -23,4 +23,4 @@ def normalize_arg(arg_name: str) -> Callable:
 
 
 def normalize(var_name: str) -> str:
-	return var_name + "" if var_name[-1].isdigit() else "1"
+	return var_name + ("" if var_name[-1].isdigit() else "1")

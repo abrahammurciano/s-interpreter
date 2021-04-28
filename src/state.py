@@ -26,4 +26,8 @@ class State:
 	@normalize_arg("label")
 	def go_to(self, label: str):
 		"Set the program counter to the given label, or None if the label is not defined."
-		self.__pc = self.__labels[label]
+		self.__pc = self.__labels.get(label, None)
+
+	def inc_pc(self):
+		if self.__pc is not None:
+			self.__pc += 1

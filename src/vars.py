@@ -6,8 +6,8 @@ from identifiers import normalize_arg
 class Vars:
 	def __init__(self, args: Sequence[int]):
 		self.__vars: DefaultDict[str, int] = defaultdict(int)
-		for i in range(1, len(args) + 1):
-			self.__vars[f"X{i}"] = args[i]
+		for i in range(len(args)):
+			self.__vars[f"X{i+1}"] = args[i]
 
 	@normalize_arg("var")
 	def inc(self, var: str):

@@ -8,3 +8,4 @@ class Increment(Instruction):
 
 	def run(self, state: State):
 		state.vars.inc(self.__var)
+		state.inc_pc()

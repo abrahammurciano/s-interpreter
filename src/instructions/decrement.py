@@ -8,3 +8,4 @@ class Decrement(Instruction):
 
 	def run(self, state: State):
 		state.vars.dec(self.__var)
+		state.inc_pc()
