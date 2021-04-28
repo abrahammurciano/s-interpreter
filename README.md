@@ -8,7 +8,8 @@ Run `s.py` with the first argument being the name of the file containing the S c
 
 Example run:
 ```
-$ ./s.py /path/to/program.s
+$ ./s.py /path/to/multiply.s 10 5
+50
 ```
 
 # Syntax
