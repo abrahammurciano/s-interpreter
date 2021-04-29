@@ -1,7 +1,10 @@
-from identifiers import normalize
 from identifiers.label import Label
-from instructions import parser
+from instructions.parser_registry import ParserRegistry
 from instructions.instruction import Instruction
+from instructions.primitives.no_op import NoOp
+from instructions.primitives.increment import Increment
+from instructions.primitives.decrement import Decrement
+from instructions.primitives.branch import Branch
 from state import State
 from typing import Dict, List, Sequence, Tuple
 import re
@@ -10,8 +13,10 @@ import re
 class Interpreter:
 	def __init__(self, code: Sequence[str], args: Sequence[int]):
 		code, labels = self.__extract_labels(code)
+		parser_registry = ParserRegistry()
+		self.__register_parsers(parser_registry)
 		self.__code: List[Instruction] = [
-			parser.parse(instruction) for instruction in code
+			parser_registry.parse(instruction) for instruction in code
 		]
 		self.__state = State(args, labels)
 
@@ -31,6 +36,12 @@ class Interpreter:
 					labels[label] = i
 				code_copy[i] = instruction[len(match[0]) :]
 		return code_copy, labels
+
+	def __register_parsers(self, registry: ParserRegistry):
+		registry.register(NoOp.parser)
+		registry.register(Increment.parser)
+		registry.register(Decrement.parser)
+		registry.register(Branch.parser)
 
 	def run(self) -> int:
 		"Runs the program and returns the integer result."
