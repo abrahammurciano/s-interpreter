@@ -1,4 +1,5 @@
 from identifiers import normalize
+from identifiers.label import Label
 from instructions import parser
 from instructions.instruction import Instruction
 from state import State
@@ -14,18 +15,18 @@ class Interpreter:
 		]
 		self.__state = State(args, labels)
 
-	__label_regex = re.compile(r"\[([A-E]\d*)\]")
+	__label_regex = re.compile(rf"\[({Label.regex})\]")
 
 	def __extract_labels(
 		self, code: Sequence[str]
-	) -> Tuple[Sequence[str], Dict[str, int]]:
+	) -> Tuple[Sequence[str], Dict[Label, int]]:
 		code_copy = list(code)
-		labels: Dict[str, int] = {}
+		labels: Dict[Label, int] = {}
 		for i in range(len(code)):
 			instruction = code[i]
 			match = self.__label_regex.match(instruction)
 			if match:
-				label = normalize(match[1])
+				label = Label(match[1])
 				if label not in labels:
 					labels[label] = i
 				code_copy[i] = instruction[len(match[0]) :]

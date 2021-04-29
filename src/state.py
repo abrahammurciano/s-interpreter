@@ -1,10 +1,10 @@
 from typing import Dict, Optional, Sequence
-from identifiers import normalize_arg
+from identifiers.label import Label
 from vars import Vars
 
 
 class State:
-	def __init__(self, args: Sequence[int], labels: Dict[str, int]):
+	def __init__(self, args: Sequence[int], labels: Dict[Label, int]):
 		self.__vars = Vars(args)
 		self.__labels = labels
 		self.__pc: Optional[int] = 0
@@ -23,8 +23,7 @@ class State:
 	def return_value(self) -> int:
 		return self.vars.return_value
 
-	@normalize_arg("label")
-	def go_to(self, label: str):
+	def go_to(self, label: Label):
 		"Set the program counter to the given label, or None if the label is not defined."
 		self.__pc = self.__labels.get(label, None)
 

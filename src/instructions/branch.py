@@ -1,9 +1,11 @@
+from identifiers.label import Label
+from identifiers.variable import Variable
 from state import State
 from .instruction import Instruction
 
 
 class Branch(Instruction):
-	def __init__(self, var: str, label: str):
+	def __init__(self, var: Variable, label: Label):
 		self.__var = var
 		self.__label = label
 
